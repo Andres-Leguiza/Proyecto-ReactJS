@@ -1,11 +1,11 @@
 
 import Item from './../Item/Item';
 
-const ItemList = ({productos}) => {
+const ItemList = ({products}) => {
 
     return (
         <div className="d-flex flex-wrap justify-content-center mt-4">
-            {productos.map(producto => <Item key={producto.id} {...producto} />)}
+            {products.map(product => <Item key={product.id} {...product} />)}
         </div>
     )
 }

@@ -1,23 +1,26 @@
 
 import { Link } from 'react-router-dom'
 
-const Item = ({id, nombre, img, precio }) => {
+const Item = ({id, name, img, price }) => {
 
     return (
-        <article className="card mx-3 mt-4" style={{width: '380px'}}>
-            <picture className='d-flex' style={{height: '300px'}}>
-                <img src={process.env.PUBLIC_URL + img} alt={nombre} className="d-block img-fluid mx-auto mh-100 mw-100" />
+        <article className="card mx-3 mt-4 shadow-lg bg-light" style={{width: '380px'}}>
+            <picture className='d-flex' style={{height: '380px'}}>
+                <img src={process.env.PUBLIC_URL + img} alt={name} className="d-block img-fluid h-100 w-100 rounded-top" />
             </picture>
-            <div className="card-body bg-light pt-3 d-flex flex-column">
+            <div className="card-body pt-3 d-flex flex-column">
                 <h5 className="card-title">
-                    {nombre}
+                    {name}
                 </h5>
                 <section>
                     <p className="card-text">
-                        Precio: ${precio}
+                        Precio: ${price}
                     </p>
-                </section>           
-                <Link to={`/item/${id}`} className="btn btn-light mt-4">Ver detalles</Link>
+                </section>
+                <footer>
+                    <Link to={`/item/${id}`} style={{fontWeight: 500}} 
+                        className="btn btn-sm btn-light border mt-4 d-flex flex-column">Ver detalles</Link>
+                </footer>
             </div>
         </article>
     )

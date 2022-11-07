@@ -1,38 +1,53 @@
 import ItemCount from "../ItemCount/ItemCount"
+import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { CartContext } from './../../context/CartContext'
 
-const ItemDetail = ({ id, nombre, img, categoria, descripcion, precio, stock }) => {
+const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
 
-    const handleOnAdd = (cantidad) => {
+    const { addItem, isInCart, getProductQuantity } = useContext(CartContext)
+
+    const handleOnAdd = (quantity) => {
         const productToAdd = {
-            id, nombre, precio, cantidad
+            id, img, name, price: price*quantity, quantity
         }
-        console.log(productToAdd)
+        addItem(productToAdd)
     }
 
+    const quantityAdded = getProductQuantity(id)
+
     return (
-        <article className="card mx-3 mt-4" style={{width: '380px'}}>
-            <picture className='d-flex' style={{height: '300px'}}>
-                <img src={process.env.PUBLIC_URL + img} alt={nombre} className="d-block img-fluid mx-auto mh-100 mw-100" />
+        <article className="card mx-3 mt-4 shadow-lg bg-light" style={{width: '380px'}}>
+            <picture className='d-flex' style={{height: '380px'}}>
+                <img src={process.env.PUBLIC_URL + img} alt={name} className="d-block img-fluid h-100 w-100 rounded-top" />
             </picture>
-            <div className="card-body bg-light pt-3">
+            <div className="card-body pt-3">
                 <h5 className="card-title">
-                    {nombre}
+                    {name}
                 </h5>
                 <section>
                     <p className="card-text">
-                        Precio: ${precio}
+                        Precio: ${price}
                     </p>
                     <p className="card-text text-uppercase">
-                        Categoria: {categoria}
+                        Categoria: {category}
                     </p>
                     <p className="card-text">
-                        Descripcion: {descripcion}
+                        Descripcion: {description}
                     </p>
                     <p className="card-text">
                         Stock Disponible: {stock}
                     </p>
-                    <ItemCount onAdd={handleOnAdd} stock={stock} inicial={1} />
                 </section>
+                <footer className="pt-4">
+                    {  
+                    stock === 0 ?
+                    <span className="d-flex flex-column"><button type="button" disabled className='btn btn-danger'>Sin Stock</button></span> :  
+                    !isInCart(id) ?
+                        <ItemCount onAdd={handleOnAdd} stock={stock} initial={quantityAdded} /> : 
+                        <Link to='/cart' className='btn btn-sm btn-light border border-2 fw-light d-flex flex-column'>Finalizar compra</Link>
+                    }
+                </footer>
             </div>
         </article>
     )

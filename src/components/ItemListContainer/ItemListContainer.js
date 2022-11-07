@@ -1,38 +1,34 @@
-
-import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProductos, getProductosPorCategoria } from '../../asyncMock'
 import ItemList from './../ItemList/ItemList';
+import { getProducts } from '../../services/firebase/firestore/products'
+import { useAsync } from '../../hooks/useAsync'
+import { ThreeBody } from '@uiball/loaders'
 
 const ItemListContainer = () => {
 
-    const [productos, setProductos] = useState([])
-    const [loading, setLoading] = useState(true)
+    const { categoryId } = useParams()
 
-    const { categoriaId } = useParams()
+    const getProductsWithCategory = () => getProducts(categoryId)
 
-    useEffect(() => {
-        setLoading(true)
-
-        const asyncFunction = categoriaId ? getProductosPorCategoria : getProductos
-       
-        asyncFunction(categoriaId).then(response => {
-            setProductos(response)
-        }).catch(error => {
-            console.log(error)
-        }).finally(() => {
-            setLoading(false)
-        })  
-    }, [categoriaId])
+    const { data: products, error, loading } = useAsync(getProductsWithCategory, [categoryId])
 
     if(loading) {
-        return <h1 className="d-flex justify-content-center mt-4">Cargando Productos...</h1>
+        return (
+            <div className='d-flex flex-column align-items-center mt-4'>
+                <h1>Cargando Productos...</h1>
+                <ThreeBody size={35} speed={1.1} color="black"/>
+            </div>
+        )
+    }
+
+    if(error) {
+        return <h1 className="d-flex justify-content-center mt-4">Hubo un error al cargar los productos.</h1>
     }
 
     return (
-        <div>
+        <div className="mb-5">
             <h1 className="d-flex justify-content-center mt-4">Nuestros Productos</h1>
-            <ItemList productos={productos} />
+            <ItemList products={products} />
         </div>
     )
 }
