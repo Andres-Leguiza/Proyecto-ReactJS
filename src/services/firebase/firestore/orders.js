@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, documentId, writeBatch, addDoc, Timestamp, } from 'firebase/firestore'
+import { collection, getDocs, query, where, documentId, writeBatch, addDoc, Timestamp } from 'firebase/firestore'
 import { db } from '..'; 
 import { useContext } from 'react';
 import { CartContext } from '../../../context/CartContext';
@@ -63,7 +63,7 @@ export const useCreateOrderInFirebase = () => {
         } catch (error) {
             console.log(error)
         }
-}
+    }
     return {
         createOrder
     }
