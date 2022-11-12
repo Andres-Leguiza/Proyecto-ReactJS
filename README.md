@@ -1,6 +1,6 @@
 # Libreria Ecommerce
 
-> An Ecommerce Systems to buy utilities
+> An Ecommerce System to buy utilities
 
 ## Running Locally
 
