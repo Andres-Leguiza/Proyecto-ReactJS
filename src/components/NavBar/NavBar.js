@@ -2,7 +2,7 @@ import "./NavBar.css"
 import CartWidget from '../CartWidget/CartWidget'
 import logoUtiles from './img/utiles.png'
 import { NavLink } from 'react-router-dom'
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext, useRef } from "react"
 import { CartContext } from './../../context/CartContext';
 import { db } from './../../services/firebase/index';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
@@ -10,6 +10,8 @@ import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 const NavBar = () => {
 
     const [categories, setCategories] = useState([])
+
+    const navbarToggler = useRef("")
 
     useEffect(() => {
         const collectionRef = query(collection(db, 'categories'), orderBy('order')) 
@@ -28,31 +30,35 @@ const NavBar = () => {
         })
       }, [])
 
-    const collapseOnClick = () => document.getElementById('navbarToggler').classList.remove('show');
+    const collapseOnClick = () => {
+        navbarToggler.current.classList.remove('show')
+    }
+
     const { totalQuantity } = useContext(CartContext)
+
     return (
             <nav className="navbar navbar-expand-md sticky-top navbar-light bg-light">
                 <div className="container">
-                    <NavLink to='/' onClick={collapseOnClick}>
+                    <NavLink to='/' className="m-auto" onClick={collapseOnClick}>
                         <picture>
                             <img src={logoUtiles} className="img-fluid ms-4" alt="Logo Libreria" />
                         </picture>
                     </NavLink>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" 
+                    <button className="navbar-toggler m-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" 
                         aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse justify-content-around" id="navbarToggler">   
+                    <div className="collapse navbar-collapse justify-content-around" ref={navbarToggler} id="navbarToggler">   
                         {
                             categories.map(category => (
                                 <NavLink key={category.id} to={`/category/${category.slug}`} type='button' onClick={collapseOnClick} 
-                                    className='nav-link btn btn-sm btn-light border fs-5 fw-500 px-2 py-1 my-1'>{category.label}</NavLink>
+                                className='nav-link btn btn-sm btn-light border fs-5 fw-500 px-2 py-1 my-1'>{category.label}</NavLink>
                                 ))
-                        }
+                            }
+                    </div>
                         {
                             totalQuantity > 0 && <CartWidget />
                         }
-                    </div>
                 </div>
             </nav>
     )

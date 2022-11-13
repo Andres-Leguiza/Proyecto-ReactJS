@@ -9,9 +9,9 @@ const CartItem = ({ product }) => {
     const  { removeItem } = useContext(CartContext)
     
     return (
-        <article className="d-flex p-3 mx-3 mt-4 shadow-lg bg-light">
+        <article className="d-flex flex-wrap p-2 p-md-3 mx-3 mt-4 rounded shadow-lg bg-light">
             <picture className="d-flex align-items-center" style={{height: '80px'}}>
-                <img src={process.env.PUBLIC_URL + product.img} alt={product.name} width="80" className="d-block img-fluid pe-2" />
+                <img src={process.env.PUBLIC_URL + product.img} alt={product.name} width="80" className="d-block img-fluid pe-md-2" />
             </picture>
             <section className="card-body d-flex justify-content-between align-items-center">
                 <h5 className="card-title">

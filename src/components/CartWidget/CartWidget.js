@@ -7,7 +7,7 @@ const CartWidget = () => {
     const { totalQuantity} = useContext(CartContext)
 
     return (
-        <NavLink to='/cart' className='text-decoration-none d-flex justify-content-center align-items-center'>
+        <NavLink to='/cart' className='text-decoration-none m-auto d-flex align-items-center'>
             <img src={cart} alt='Carrito' style={{width: 40}}/>
             <p className='fw-bold px-1 m-0 text-dark'>{totalQuantity} Items</p>
         </NavLink>        

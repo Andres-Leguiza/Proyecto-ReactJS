@@ -68,12 +68,16 @@ const Checkout = () => {
         )
     }
 
+    const goHome = () => {
+        navigate("/")
+    }
+
     return (
-        <form onSubmit={buildOrder} className="container mt-5 w-50">
+        <form onSubmit={buildOrder} className="container mt-5">
             <h2 className="d-flex justify-content-center mb-5">Checkout</h2>
             <div className="input-group mb-4">
                 <span className="input-group-text">Nombre y Apellido</span>
-                <input type="text" ref={name} aria-label="Nombre" placeholder="Juan" className="form-control" required/>
+                <input type="text" ref={name} aria-label="Nombre" placeholder="Juan" className="form-control" required />
                 <input type="text" ref={lastName} aria-label="Apellido" placeholder="Perez" className="form-control" required />
             </div>
             <div className="input-group mb-4">
@@ -86,6 +90,7 @@ const Checkout = () => {
             </div>
             <div className="d-flex justify-content-center">
                 <button type="submit" className="btn btn-outline-success">Completar Compra</button>
+                <button type="button" onClick={goHome} className="btn btn-outline-info ms-2" title="Seguir Comprando">Seguir Comprando</button>
             </div>
         </form>
     )
