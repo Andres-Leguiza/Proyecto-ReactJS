@@ -7,9 +7,7 @@ import { ThreeBody } from '@uiball/loaders'
 const ItemDetailContainer = () => {
 
     const { productId } = useParams()
-
     const getProductById = () => getProduct(productId)
-
     const { data: product, error, loading } = useAsync(getProductById, [productId])
 
     if(loading) {
@@ -19,7 +17,6 @@ const ItemDetailContainer = () => {
                 <ThreeBody size={35} speed={1.1} color="black"/>
             </div>
         )
-
     }
 
     if(error) {

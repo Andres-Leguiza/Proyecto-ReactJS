@@ -7,9 +7,7 @@ import { ThreeBody } from '@uiball/loaders'
 const ItemListContainer = () => {
 
     const { categoryId } = useParams()
-
     const getProductsWithCategory = () => getProducts(categoryId)
-
     const { data: products, error, loading } = useAsync(getProductsWithCategory, [categoryId])
 
     if(loading) {

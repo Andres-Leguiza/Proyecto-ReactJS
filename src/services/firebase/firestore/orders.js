@@ -8,7 +8,6 @@ export const useCreateOrderInFirebase = () => {
     const { cart, totalPrice } = useContext(CartContext)
 
     const createOrder = async (buyerData) => {
-
         try {
             const orderObj = {
                 buyer: buyerData,
@@ -18,21 +17,15 @@ export const useCreateOrderInFirebase = () => {
             }
             
             const batch = writeBatch(db)
-
             const outOfStock = []
-
             const ids = cart.map(prod => prod.id)
-    
             const productsRef = collection(db, 'products')
-    
             const productsAddedFromFirestore = await getDocs(query(productsRef, where(documentId(), 'in', ids)))
-
             const { docs } = productsAddedFromFirestore
 
             docs.forEach(doc => {
                 const dataDoc = doc.data()
                 const stockDb = dataDoc.stock
-
                 const productAddedToCart = cart.find(prod => prod.id === doc.id)
                 const prodQuantity = productAddedToCart?.quantity
 
@@ -46,11 +39,8 @@ export const useCreateOrderInFirebase = () => {
             if(outOfStock.length === 0) {
                 
                 await batch.commit()
-
                 const orderRef = collection(db, 'orders')
-
                 const orderAdded = await addDoc(orderRef, orderObj)
-
                 return {
                     result: 'success', orderId: orderAdded.id
                 }

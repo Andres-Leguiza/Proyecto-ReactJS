@@ -8,9 +8,9 @@ import { db } from './../../services/firebase/index';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 
 const NavBar = () => {
-
+    
     const [categories, setCategories] = useState([])
-
+    const { totalQuantity } = useContext(CartContext)
     const navbarToggler = useRef("")
 
     useEffect(() => {
@@ -21,7 +21,6 @@ const NavBar = () => {
           const categoriesAdapted = response.docs.map(doc => {
             const data = doc.data()
             const id = doc.id
-    
             return { id, ...data}
           })
           setCategories(categoriesAdapted)
@@ -33,8 +32,6 @@ const NavBar = () => {
     const collapseOnClick = () => {
         navbarToggler.current.classList.remove('show')
     }
-
-    const { totalQuantity } = useContext(CartContext)
 
     return (
             <nav className="navbar navbar-expand-md sticky-top navbar-light bg-light">

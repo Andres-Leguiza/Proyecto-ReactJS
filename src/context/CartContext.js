@@ -30,13 +30,11 @@ export const CartProvider = ({children}) => {
                         ...product,
                         quantity: productToAdd.quantity
                     }
-
                     return productUpdated
                 } else {
                     return product
                 }
             })
-
             setCart(cartUpdated)
         }
     }
@@ -56,7 +54,6 @@ export const CartProvider = ({children}) => {
         cart.forEach(product => {
             sumQty += product.quantity
         })
-
         return sumQty
     }
 
@@ -66,7 +63,6 @@ export const CartProvider = ({children}) => {
         cart.forEach(product => {
             sumPrice += product.price
         })
-  
         return sumPrice
     }
 

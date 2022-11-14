@@ -1,5 +1,3 @@
-
-
 import { CartContext }from '../../context/CartContext'
 import { useContext } from "react"
 import deleteIcon from './img/delete.png'
