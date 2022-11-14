@@ -57,7 +57,7 @@ const NavBar = () => {
                             }
                     </div>
                         {
-                            totalQuantity > 0 && <CartWidget />
+                            totalQuantity > 0 && <CartWidget handleCollapse={collapseOnClick}/>
                         }
                 </div>
             </nav>
